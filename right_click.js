@@ -18,7 +18,7 @@ const Right = {
 	copy:"",
 
 	hook(){
-		urls.map((v, e) => { return Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
+		urls.map(v => { return Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
 		$.getJSON('https://cdn.rococpy.com/version/rightclick.json', (data) => {
 			Right.version = data['version'];
 			Right.changelog = data['changelog'];
@@ -69,7 +69,6 @@ const Right = {
 	transition: 0.3s all;
 	position: absolute;
 }
-
 .ri_gh_t li:after{
 	content: " ";
 	width: 0%;
@@ -146,7 +145,6 @@ const Right = {
 				<hr>
 				<li onclick="copyToClipboard(location.href)">현재 페이지 URL 복사</li>
 				<li onclick="Right.openmodal(location.href)">현재 페이지의 QR 생성</li>
-				
 				${e.target.href !== "" && e.target.href !== undefined
 				? `<hr><li onclick="copyToClipboard('${e.target.href}')">링크 복사</li>
 				<li onclick="window.open('${e.target.href}')">새 탭에서 링크 열기</li>
@@ -186,4 +184,4 @@ const Right = {
 	}
 }
 
-$(() => Right.hook())
+$(_ => Right.hook())
