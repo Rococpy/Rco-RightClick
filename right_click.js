@@ -69,6 +69,7 @@ const Right = {
 	transition: 0.3s all;
 	position: absolute;
 }
+
 .ri_gh_t li:after{
 	content: " ";
 	width: 0%;
