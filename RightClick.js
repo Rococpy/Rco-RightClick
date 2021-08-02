@@ -1,7 +1,6 @@
-/* Rco Right Clock Js 1.6.0
+/* Rco Right Clock Js 1.6.1
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const dd = console.log
-const version = "1.6.0"
+const Rco__version = "1.6.1"
 
 function copyToClipboard(val) {
   let t = document.createElement("textarea");
@@ -12,17 +11,17 @@ function copyToClipboard(val) {
   document.body.removeChild(t);
 }
 
-const Right = {
+const Rco__Right = {
 	version: "",
 	changelog: "",
 	url:"",
 	copy:"",
 
 	hook(){
-		Rco__urls.map(v => { return Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
+		Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
 		$.getJSON('https://cdn.rococpy.com/version/rightclick.json', (data) => {
-			Right.version = data['version'];
-			Right.changelog = data['changelog'];
+			Rco__Right.version = data['version'];
+			Rco__Right.changelog = data['changelog'];
 		});
 
 		$('head').append(`<style>
@@ -126,16 +125,16 @@ const Right = {
 </style>`)
 		$(document)
 			.on("click", ".Rco__right_modal_background", _ => $(".Rco__right_modal").remove())
-			.on('click', (e) => { if (e.target.className !== "Rco__right") return Right.clear(); })
+			.on('click', (e) => { if (e.target.className !== "Rco__right") return Rco__Right.clear(); })
 			.on('contextmenu', (e) => {
 				e.preventDefault();
 	
-				Right.open(e.clientX, e.clientY, e);
+				Rco__Right.open(e.clientX, e.clientY, e);
 			 })
 	},
 
 	open(x, y, e){
-		Right.copy = window.getSelection().type == "Range" ? window.getSelection().getRangeAt(0).toString() : ""
+		Rco__Right.copy = window.getSelection().type == "Range" ? window.getSelection().getRangeAt(0).toString() : ""
 
 		$(".Rco__right").remove();
 		$('body').append(`<div class="Rco__right">
@@ -145,21 +144,21 @@ const Right = {
 				<li onclick="location.reload()">새로고침</li>
 				<hr>
 				<li onclick="copyToClipboard(location.href)">현재 페이지 URL 복사</li>
-				<li onclick="Right.openmodal(location.href)">현재 페이지의 QR 생성</li>
+				<li onclick="Rco__Right.openmodal(location.href)">현재 페이지의 QR 생성</li>
 				${e.target.href !== "" && e.target.href !== undefined
 				? `<hr><li onclick="copyToClipboard('${e.target.href}')">링크 복사</li>
 				<li onclick="window.open('${e.target.href}')">새 탭에서 링크 열기</li>
-				<li onclick="Right.openmodal('${e.target.href}')">이 링크의 QR 생성</li>`
+				<li onclick="Rco__Right.openmodal('${e.target.href}')">이 링크의 QR 생성</li>`
 				: ""}
 				${e.target.currentSrc ? `<hr><li onclick="copyToClipboard('${e.target.currentSrc}')">이미지 링크 복사</li>
 				<li onclick="window.open('${e.target.currentSrc}')">새 탭에서 이미지 열기</li>
-				<li onclick="Right.openmodal('${e.target.currentSrc}')">이 이미지의 QR 생성</li>` : ""}
+				<li onclick="Rco__Right.openmodal('${e.target.currentSrc}')">이 이미지의 QR 생성</li>` : ""}
 				<hr>
-				${Right.copy !== "" ? `<li onclick="copyToClipboard(Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
-				${Right.url}
+				${Rco__Right.copy !== "" ? `<li onclick="copyToClipboard(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
+				${Rco__Right.url}
 				<hr>
-				<li onclick="setTimeout(() =>{alert('${Right.changelog}')}, 10)">Change Log</li>
-				<li onclick="setTimeout(() =>{alert('Rco Right Clock Js\\nVersion: ${version} | Lasted: ${Right.version}${Right.version > version ? "\\n새로운 버전이 나왔습니다!" : Right.version < version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" : ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
+				<li onclick="setTimeout(() =>{alert('${Rco__Right.changelog}')}, 10)">Change Log</li>
+				<li onclick="setTimeout(() =>{alert('Rco Right Clock Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" : ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
 			</ul>
 		</div>`)
 
@@ -185,4 +184,4 @@ const Right = {
 	}
 }
 
-$(_ => Right.hook())
+$(_ => Rco__Right.hook())
