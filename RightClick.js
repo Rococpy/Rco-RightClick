@@ -27,7 +27,7 @@ const Rco__Right = {
 		$('head').append(`<style>
 .Rco__right ul{
 	margin: 0;
-  padding-left: 0;
+	padding-left: 0;
 	list-style: none;
 }
 .Rco__right hr{
@@ -130,7 +130,7 @@ const Rco__Right = {
 				e.preventDefault();
 	
 				Rco__Right.open(e.clientX, e.clientY, e);
-			 })
+			})
 	},
 
 	open(x, y, e){
