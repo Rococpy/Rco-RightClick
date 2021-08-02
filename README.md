@@ -6,11 +6,19 @@ RightClick.js는 커스텀 된 우클릭 메뉴를 제공합니다.\
 ### Requirements
  * 이 라이브러리는 Jquery 가 필요합니다.
  
-### Preset
-해당 라이브러리를 사용하려면 사전 설정이 필요합니다.
+### How To Use
+> Script 로드
+```html
+<script src="https://cdn.rococpy.com/js/RightClick.js"></script>
+```
+or
+```html
+<script src="Custom Location/RightClick.js"></script>
+```
 
 > 기본 설정
 
+* 해당 라이브러리를 사용하려면 사전 설정이 필요합니다.
 * HTML `<script>`를 통해 RightClick.js가 로드 되기 전에 선언을 해주시면 됩니다.
 ```js
 const Rco__urls = [
