@@ -4,7 +4,7 @@ RightClick.js는 커스텀 된 우클릭 메뉴를 제공합니다.\
 여러가지 상호작용 이벤트를 감지하여 상황에 맞는 추가 우클릭 메뉴를 보여줍니다.
 
 ### Requirements
- * jQuery (Any versions. recommends 3.4.1)
+ * jQuery (↑ 1.12.4, recommends 3.4.1)
  
 ## How To Use
 ### Script 로드
