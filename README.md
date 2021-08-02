@@ -41,7 +41,7 @@ const Rco__urls = [
 ```
  
 ## Preview
-* Rococpy의 패밀리 사이트 대부분 해당 라이브러리가 적용되어 있습니다.
+* Rococpy의 패밀리 사이트 대부분 해당 라이브러리가 적용되어 있습니다. https://rococpy.com
 
 ### 기본 우클릭
 ![rjssample](https://user-images.githubusercontent.com/50366343/127797290-50923186-09f8-4390-b419-a82c23d00fc2.png)
