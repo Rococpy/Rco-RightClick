@@ -3,12 +3,12 @@ Copyright 2019 - 2021 Rococpy All rights reserved.*/
 const Rco__version = "1.6.1"
 
 function copyToClipboard(val) {
-  let t = document.createElement("textarea");
-  document.body.appendChild(t);
-  t.value = val;
-  t.select();
-  document.execCommand('copy');
-  document.body.removeChild(t);
+	let t = document.createElement("textarea");
+	document.body.appendChild(t);
+	t.value = val;
+	t.select();
+	document.execCommand('copy');
+	document.body.removeChild(t);
 }
 
 const Rco__Right = {
