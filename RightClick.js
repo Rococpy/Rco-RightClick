@@ -1,6 +1,6 @@
-/* Rco Right Clock Js 1.6.1
+/* Rco Right Clock Js 1.6.2
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.6.1"
+const Rco__version = "1.6.2"
 
 function copyToClipboard(val) {
 	let t = document.createElement("textarea");
@@ -19,9 +19,15 @@ const Rco__Right = {
 
 	hook(){
 		Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
-		$.getJSON('https://cdn.rococpy.com/version/rightclick.json', (data) => {
+		$.get('https://cdn.rococpy.com/version/rightclick.json', (data) => {
+
 			Rco__Right.version = data['version'];
 			Rco__Right.changelog = data['changelog'];
+		}).fail(_ => {
+			console.error("[Rco RightClick] Opps!Failed to fetch version information from rococpy server!")
+
+			Rco__Right.version = "0.0.0";
+			Rco__Right.changelog = "서버에서 새로운 변경사항을 조회하지 못했습니다.\\nOffline Mode";
 		});
 
 		$('head').append(`<style>
@@ -157,8 +163,8 @@ const Rco__Right = {
 				${Rco__Right.copy !== "" ? `<li onclick="copyToClipboard(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
 				${Rco__Right.url}
 				<hr>
-				<li onclick="setTimeout(() =>{alert('${Rco__Right.changelog}')}, 10)">Change Log</li>
-				<li onclick="setTimeout(() =>{alert('Rco Right Clock Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" : ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
+				<li onclick="setTimeout(_ =>{ alert('${Rco__Right.changelog}')}, 10)">Change Log</li>
+				<li onclick="setTimeout(_ =>{ alert('Rco Right Clock Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version == "0.0.0" ? "\\n\\n서버에서 새로운 버전을 조회하지 못했습니다.\\nOffline Mode" : Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" :  ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
 			</ul>
 		</div>`)
 
@@ -184,4 +190,7 @@ const Rco__Right = {
 	}
 }
 
-$(_ => Rco__Right.hook())
+$(_ => {
+	Rco__Right.hook()
+	$.ajaxSetup({cache: false})
+})
