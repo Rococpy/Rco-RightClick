@@ -1,4 +1,4 @@
-/* Rco Right Clock Js 1.6.5
+/* Rco Right Click Js 1.6.5
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
 const Rco__version = "1.6.5"
 
@@ -9,7 +9,7 @@ const Rco__Right = {
 	copy:"",
 
 	hook(){
-		Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
+		typeof(Rco__urls) == "object" ? Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; }) : ""
 		$.get({url: 'https://cdn.rococpy.com/version/rightclick.json', cache: false}, (data) => {
 
 			Rco__Right.version = data['version'];
@@ -152,10 +152,9 @@ const Rco__Right = {
 				<li onclick="Rco__Right.openmodal('${e.target.currentSrc}')">이 이미지의 QR 생성</li>` : ""}
 				<hr>
 				${Rco__Right.copy !== "" ? `<li onclick="Rco__Right.ctc(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
-				${Rco__Right.url}
-				<hr>
+				${Rco__Right.url !== "" ? Rco__Right.url + "<hr>" : ""}
 				<li onclick="setTimeout(_ =>{ alert('${Rco__Right.changelog}')}, 10)">Change Log</li>
-				<li onclick="setTimeout(_ =>{ alert('Rco Right Clock Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version == "0.0.0" ? "\\n\\n서버에서 새로운 버전을 조회하지 못했습니다.\\nOffline Mode" : Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" :  ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
+				<li onclick="setTimeout(_ =>{ alert('Rco Right Click Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version == "0.0.0" ? "\\n\\n서버에서 새로운 버전을 조회하지 못했습니다.\\nOffline Mode" : Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" :  ""} \\n\\nCopyright Rococpy')}, 10)">정보</li>
 			</ul>
 		</div>`)
 
