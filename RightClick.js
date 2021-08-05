@@ -1,6 +1,6 @@
-/* Rco Right Clock Js 1.6.2
+/* Rco Right Clock Js 1.6.3
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.6.2"
+const Rco__version = "1.6.3"
 
 function copyToClipboard(val) {
 	let t = document.createElement("textarea");
@@ -19,6 +19,7 @@ const Rco__Right = {
 
 	hook(){
 		Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; })
+		$.ajaxSetup({ cache: false })
 		$.get('https://cdn.rococpy.com/version/rightclick.json', (data) => {
 
 			Rco__Right.version = data['version'];
@@ -29,6 +30,7 @@ const Rco__Right = {
 			Rco__Right.version = "0.0.0";
 			Rco__Right.changelog = "서버에서 새로운 변경사항을 조회하지 못했습니다.\\nOffline Mode";
 		});
+		$.ajaxSetup({ cache: true })
 
 		$('head').append(`<style>
 .Rco__right ul{
@@ -192,5 +194,4 @@ const Rco__Right = {
 
 $(_ => {
 	Rco__Right.hook()
-	$.ajaxSetup({cache: false})
 })
