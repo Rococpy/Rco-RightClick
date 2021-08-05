@@ -1,6 +1,6 @@
-/* Rco Right Click Js 1.6.5
+/* Rco Right Click Js 1.6.6
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.6.5"
+const Rco__version = "1.6.6"
 
 const Rco__Right = {
 	version: "",
