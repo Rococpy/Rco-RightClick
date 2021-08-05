@@ -1,15 +1,6 @@
-/* Rco Right Clock Js 1.6.4
+/* Rco Right Clock Js 1.6.5
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.6.4"
-
-function copyToClipboard(val) {
-	let t = document.createElement("textarea");
-	document.body.appendChild(t);
-	t.value = val;
-	t.select();
-	document.execCommand('copy');
-	document.body.removeChild(t);
-}
+const Rco__version = "1.6.5"
 
 const Rco__Right = {
 	version: "",
@@ -149,18 +140,18 @@ const Rco__Right = {
 				<li onclick="history.forward()">다음 페이지</li>
 				<li onclick="location.reload()">새로고침</li>
 				<hr>
-				<li onclick="copyToClipboard(location.href)">현재 페이지 URL 복사</li>
+				<li onclick="Rco__Right.ctc(location.href)">현재 페이지 URL 복사</li>
 				<li onclick="Rco__Right.openmodal(location.href)">현재 페이지의 QR 생성</li>
 				${e.target.href !== "" && e.target.href !== undefined
-				? `<hr><li onclick="copyToClipboard('${e.target.href}')">링크 복사</li>
+				? `<hr><li onclick="Rco__Right.ctc('${e.target.href}')">링크 복사</li>
 				<li onclick="window.open('${e.target.href}')">새 탭에서 링크 열기</li>
 				<li onclick="Rco__Right.openmodal('${e.target.href}')">이 링크의 QR 생성</li>`
 				: ""}
-				${e.target.currentSrc ? `<hr><li onclick="copyToClipboard('${e.target.currentSrc}')">이미지 링크 복사</li>
+				${e.target.currentSrc ? `<hr><li onclick="Rco__Right.ctc('${e.target.currentSrc}')">이미지 링크 복사</li>
 				<li onclick="window.open('${e.target.currentSrc}')">새 탭에서 이미지 열기</li>
 				<li onclick="Rco__Right.openmodal('${e.target.currentSrc}')">이 이미지의 QR 생성</li>` : ""}
 				<hr>
-				${Rco__Right.copy !== "" ? `<li onclick="copyToClipboard(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
+				${Rco__Right.copy !== "" ? `<li onclick="Rco__Right.ctc(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
 				${Rco__Right.url}
 				<hr>
 				<li onclick="setTimeout(_ =>{ alert('${Rco__Right.changelog}')}, 10)">Change Log</li>
@@ -187,6 +178,15 @@ const Rco__Right = {
 				<img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&choe=UTF-8&chl=${url}">
 			</div>
 			<div class="Rco__right_modal_background"></div>`)
+	},
+
+	ctc(val){
+		let t = document.createElement("textarea");
+		document.body.appendChild(t);
+		t.value = val;
+		t.select();
+		document.execCommand('copy');
+		document.body.removeChild(t);
 	}
 }
 
