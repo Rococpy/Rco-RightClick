@@ -1,6 +1,6 @@
-/* Rco Right Click Js 1.7.0
+/* Rco Right Click Js 1.6.8
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.7.0"
+const Rco__version = "1.6.8"
 
 const Rco__Right = {
 	version: "",
@@ -21,7 +21,105 @@ const Rco__Right = {
 			Rco__Right.changelog = "서버에서 새로운 변경사항을 조회하지 못했습니다.\\nOffline Mode";
 		});
 
-		$('head').append(`<link href="https://cdn.rococpy.com/others/Rco-Right.css">`)
+		$('head').append(`<style>
+.Rco__right ul{
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+}
+.Rco__right hr{
+	margin:0;
+}
+.Rco__right{
+	text-transform: inherit;
+	box-sizing: border-box;
+	position: fixed;
+	border: 1px solid lightgray;
+	background: white;
+	padding: 7px;
+	z-index: 99999999999999;
+	width: 250px; 
+	border-radius: 10px;
+	transform: scale(0.9);
+	transition: 0.2s all;
+	opacity: 0;
+}
+
+.Rco__right li{
+	line-height: inherit!important;
+	letter-spacing: 0.0em;
+	font-family:Malgun Gothic;
+	position: relative;
+	cursor: pointer;
+	padding: 10px;
+	font-size:14px;
+}
+
+.Rco__right li:before{
+	content: " ";
+	width: 0%;
+	left: 0;
+	top: 0;
+	background: lightgray;
+	height: 100%;
+	z-index: -1;
+	transition: 0.3s all;
+	position: absolute;
+}
+.Rco__right li:after{
+	content: " ";
+	width: 0%;
+	left: 0;
+	top: 0;
+	background: darkgray;
+	height: 100%;
+	z-index: -1;
+	position: absolute;
+}
+
+.Rco__right li:hover:before{
+	width: 100%;
+}
+
+.Rco__right li:active:after{
+	transition: 0.2s all;
+	width: 100%;
+}
+
+.Rco__right_modal{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:9999999999999999999999999999;
+}
+
+.Rco__right_modal_content{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	text-align:center;
+}
+
+.Rco__right_modal_content img{
+	max-width: 500px;
+	max-height: 500px;
+	width: 100%;
+}
+
+.Rco__right_modal_background{
+	position:absolute;
+	top:0
+	left:0;
+	width:100%;
+	height:100%;
+	background: rgba(0,0,0,0.5);
+	z-index: -1;
+}
+
+</style>`)
 		$(document)
 			.on("click", ".Rco__right_modal_background", _ => $(".Rco__right_modal").remove())
 			.on('click', (e) => { if (e.target.className !== "Rco__right") return Rco__Right.clear(); })
@@ -91,4 +189,6 @@ const Rco__Right = {
 	}
 }
 
-$(_ => Rco__Right.hook())
+$(_ => {
+	Rco__Right.hook()
+})
