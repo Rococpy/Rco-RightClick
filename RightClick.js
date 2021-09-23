@@ -13,7 +13,7 @@ const Rco__Right = {
 	hook(){
 		if (typeof(Rco__urls) == "object") Rco__urls.map(v => Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`)
 
-		$.get({url: 'https://update.rococpy.com/rightclick'}, (data) => {
+		$.get({url: 'https://update.rococpy.com/api/rightclick'}, (data) => {
 			data = JSON.parse(data)[0];
 			Rco__Right.version = data['version'];
 			Rco__Right.changelog = data['changelog'];
