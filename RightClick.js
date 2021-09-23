@@ -1,133 +1,47 @@
-/* Rco Right Click Js 1.6.8
+/* Rco Right Click Js 2.0.1
 Copyright 2019 - 2021 Rococpy All rights reserved.*/
-const Rco__version = "1.6.8"
+const Rco__version = "2.0.1",
+			Rco__Status = "Stable";
 
 const Rco__Right = {
-	version: "",
-	changelog: "",
+	version: "0.0.0",
+	changelog: "서버에서 새로운 변경사항을 조회하지 못했습니다.\\nOffline Mode",
+	info: "서버에서 새로운 버전을 조회하지 못했습니다.\\nOffline Mode",
 	url:"",
 	copy:"",
 
 	hook(){
-		typeof(Rco__urls) == "object" ? Rco__urls.map(v => { return Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`; }) : ""
-		$.get({url: 'https://cdn.rococpy.com/version/rightclick.json', cache: false}, (data) => {
+		if (typeof(Rco__urls) == "object") Rco__urls.map(v => Rco__Right.url += `<li onclick="location.href='${v[1]}'">${v[0]}(으)로 이동</li>`)
 
+		$.get({url: 'https://update.rococpy.com/rightclick'}, (data) => {
+			data = JSON.parse(data)[0];
 			Rco__Right.version = data['version'];
 			Rco__Right.changelog = data['changelog'];
-		}).fail(_ => {
-			console.error("[Rco RightClick] Opps!Failed to fetch version information from rococpy server!")
+			
+			if(Rco__Status == "Dev") Rco__Right.info = "이 애드온은 개발중인 버전입니다!\\n해당 애드온은 불안정하며 사용중에 심각한 문제를 일으킬 수 있습니다.\\nhttps://project.rococpy.com/rightclick에서 안정적인 버전을 사용해주세요.";
+			else{
+				if (Rco__Right.version == "0.0.0") return;
+				else if (Rco__Right.version == Rco__version) Rco__Right.info = "최신 버전입니다!";
+				else if (Rco__Right.version > Rco__version) Rco__Right.info = "새로운 버전이 나왔습니다!";
+				else Rco__Right.info = "이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!";
+			}
 
-			Rco__Right.version = "0.0.0";
-			Rco__Right.changelog = "서버에서 새로운 변경사항을 조회하지 못했습니다.\\nOffline Mode";
-		});
+		}).fail(_ => console.error("[Rco RightClick] Opps!Failed to fetch version information from rococpy server!"));
 
-		$('head').append(`<style>
-.Rco__right ul{
-	margin: 0;
-	padding-left: 0;
-	list-style: none;
-}
-.Rco__right hr{
-	margin:0;
-}
-.Rco__right{
-	text-transform: inherit;
-	box-sizing: border-box;
-	position: fixed;
-	border: 1px solid lightgray;
-	background: white;
-	padding: 7px;
-	z-index: 99999999999999;
-	width: 250px; 
-	border-radius: 10px;
-	transform: scale(0.9);
-	transition: 0.2s all;
-	opacity: 0;
-}
+		$.get("https://cdn.rococpy.com/others/RcoRight.css", (data) => {
+			$('head').append(`<style>${data}</style>`)
 
-.Rco__right li{
-	line-height: inherit!important;
-	letter-spacing: 0.0em;
-	font-family:Malgun Gothic;
-	position: relative;
-	cursor: pointer;
-	padding: 10px;
-	font-size:14px;
-}
-
-.Rco__right li:before{
-	content: " ";
-	width: 0%;
-	left: 0;
-	top: 0;
-	background: lightgray;
-	height: 100%;
-	z-index: -1;
-	transition: 0.3s all;
-	position: absolute;
-}
-.Rco__right li:after{
-	content: " ";
-	width: 0%;
-	left: 0;
-	top: 0;
-	background: darkgray;
-	height: 100%;
-	z-index: -1;
-	position: absolute;
-}
-
-.Rco__right li:hover:before{
-	width: 100%;
-}
-
-.Rco__right li:active:after{
-	transition: 0.2s all;
-	width: 100%;
-}
-
-.Rco__right_modal{
-	position:fixed;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	z-index:9999999999999999999999999999;
-}
-
-.Rco__right_modal_content{
-	position:absolute;
-	top:50%;
-	left:50%;
-	transform: translate(-50%, -50%);
-	text-align:center;
-}
-
-.Rco__right_modal_content img{
-	max-width: 500px;
-	max-height: 500px;
-	width: 100%;
-}
-
-.Rco__right_modal_background{
-	position:absolute;
-	top:0
-	left:0;
-	width:100%;
-	height:100%;
-	background: rgba(0,0,0,0.5);
-	z-index: -1;
-}
-
-</style>`)
-		$(document)
-			.on("click", ".Rco__right_modal_background", _ => $(".Rco__right_modal").remove())
-			.on('click', (e) => { if (e.target.className !== "Rco__right") return Rco__Right.clear(); })
-			.on('contextmenu', (e) => {
-				e.preventDefault();
-	
-				Rco__Right.open(e.clientX, e.clientY, e);
-			})
+			$(document)
+				.on("click", ".Rco__right_modal_background", _ => $(".Rco__right_modal").remove())
+				.on('click', e => { if (e.target.className !== "Rco__right") Rco__Right.clear(); })
+				.on("keydown", _ => {	if($(".Rco__right_modal_content").length)	$(".Rco__right_modal").remove() })
+				.on('contextmenu', e => {
+					e.preventDefault();
+					
+					Rco__Right.open(e.clientX, e.clientY, e);
+				})
+		})
+		.fail(_ => console.error("[Rco RightClick] Opps!Failed to fetch RightClick Css from rococpy server!\\n[Rco RightClick] Rco Disable RightClick"));
 	},
 
 	open(x, y, e){
@@ -144,8 +58,8 @@ const Rco__Right = {
 				<li onclick="Rco__Right.openmodal(location.href)">현재 페이지의 QR 생성</li>
 				${e.target.href !== "" && e.target.href !== undefined
 				? `<hr><li onclick="Rco__Right.ctc('${e.target.href}')">링크 복사</li>
-				<li onclick="window.open('${e.target.href}')">새 탭에서 링크 열기</li>
-				<li onclick="Rco__Right.openmodal('${e.target.href}')">이 링크의 QR 생성</li>`
+					<li onclick="window.open('${e.target.href}')">새 탭에서 링크 열기</li>
+					<li onclick="Rco__Right.openmodal('${e.target.href}')">이 링크의 QR 생성</li>`
 				: ""}
 				${e.target.currentSrc ? `<hr><li onclick="Rco__Right.ctc('${e.target.currentSrc}')">이미지 링크 복사</li>
 				<li onclick="window.open('${e.target.currentSrc}')">새 탭에서 이미지 열기</li>
@@ -153,8 +67,8 @@ const Rco__Right = {
 				<hr>
 				${Rco__Right.copy !== "" ? `<li onclick="Rco__Right.ctc(Rco__Right.copy)">선택한 텍스트 복사</li><hr>` : ""}
 				${Rco__Right.url !== "" ? Rco__Right.url + "<hr>" : ""}
-				<li onclick="setTimeout(_ => alert('${Rco__Right.changelog}'), 10)">Change Log</li>
-				<li onclick="setTimeout(_ => alert('Rco Right Click Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}${Rco__Right.version == "0.0.0" ? "\\n\\n서버에서 새로운 버전을 조회하지 못했습니다.\\nOffline Mode" : Rco__Right.version > Rco__version ? "\\n새로운 버전이 나왔습니다!" : Rco__Right.version < Rco__version ? "\\n\\n이 애드온은 손상되었습니다!\\n누군가에 의해 임의로 수정됬을 수 있습니다!\\nhttps://project.rococpy.com/rightclick에서 새로 다운로드 하십시오!" :  ""} \\n\\nCopyright Rococpy'), 10)">정보</li>
+				<li onclick="setTimeout(_ => alert('${Rco__Right.changelog.replaceAll("\r\n", "\\n")}'), 10)">Change Log</li>
+				<li onclick="setTimeout(_ => alert('Rco Right Click Js\\nVersion: ${Rco__version} | Lasted: ${Rco__Right.version}\\n\\n${Rco__Right.info}\\n\\nCopyright Rococpy'), 10)">정보</li>
 			</ul>
 		</div>`)
 
@@ -166,9 +80,7 @@ const Rco__Right = {
 
 	clear(){
 		$(".Rco__right").css({"transform": "scale(0.9)", "opacity": "0", "box-shadow": "none"});
-		setTimeout(() => {
-			$(".Rco__right").remove();
-		}, 201)
+		setTimeout(_ => $(".Rco__right").remove(), 201)
 	},
 
 	openmodal(url){
@@ -176,7 +88,8 @@ const Rco__Right = {
 			<div class="Rco__right_modal_content">
 				<img src="https://chart.googleapis.com/chart?chs=500x500&cht=qr&choe=UTF-8&chl=${url}">
 			</div>
-			<div class="Rco__right_modal_background"></div>`)
+			<div class="Rco__right_modal_background"></div>
+		</div>`)
 	},
 
 	ctc(val){
@@ -189,6 +102,4 @@ const Rco__Right = {
 	}
 }
 
-$(_ => {
-	Rco__Right.hook()
-})
+$(_ => Rco__Right.hook())
